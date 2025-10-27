@@ -79,7 +79,8 @@ runs:
         OLLAMA_PORT: ${{ inputs.OLLAMA-PORT }}
       run: node ${{ github.action_path }}/.github/scripts/code-review/main.js
 
-    - name: Cleanup
-      if: always()
-      shell: bash
-      run: sudo systemctl stop ollama || pkill ollama 
+    # NOTE : no need for clean up
+    # - name: Cleanup
+    #   if: always()
+    #   shell: bash
+    #   run: sudo systemctl stop ollama || pkill ollama 
