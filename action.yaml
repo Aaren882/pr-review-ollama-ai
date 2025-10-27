@@ -26,6 +26,14 @@ inputs:
     description: 'Number of files to review concurrently'
     required: false
     default: '5'
+  OLLAMA-ADDRESS:
+    description: 'Address for ollama'
+    required: false
+    default: 'localhost'
+  OLLAMA-PORT:
+    description: 'Port for ollama'
+    required: false
+    default: '11434'
 
 runs:
   using: 'composite'
@@ -39,13 +47,13 @@ runs:
       uses: tj-actions/changed-files@v42
       id: changed-files
 
-    - name: Install Ollama
-      shell: bash
-      run: |
-        curl -fsSL https://ollama.com/install.sh | sh
-        ollama serve &
-        sleep 10
-        ollama pull ${{ inputs.model }}
+    # - name: Install Ollama
+    #   shell: bash
+    #   run: |
+    #     curl -fsSL https://ollama.com/install.sh | sh
+    #     ollama serve &
+    #     sleep 10
+    #     ollama pull ${{ inputs.model }}
 
     - name: Setup Node.js
       uses: actions/setup-node@v4
@@ -67,6 +75,8 @@ runs:
         FILE_PATTERN: ${{ inputs.file-pattern }}
         BASE_BRANCH: ${{ inputs.base-branch }}
         CONCURRENCY_LIMIT: ${{ inputs.concurrency-limit }}
+        OLLAMA_ADDRESS: ${{ inputs.OLLAMA-ADDRESS }}
+        OLLAMA_PORT: ${{ inputs.OLLAMA-PORT }}
       run: node ${{ github.action_path }}/.github/scripts/code-review/main.js
 
     - name: Cleanup

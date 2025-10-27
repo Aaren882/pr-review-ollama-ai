@@ -16,8 +16,8 @@ class OllamaAPI {
   async makeRequest(endpoint, data) {
     return new Promise((resolve, reject) => {
       const options = {
-        hostname: 'localhost',
-        port: 11434,
+        hostname: process.env.OLLAMA_ADDRESS || 'localhost',
+        port: process.env.OLLAMA_PORT,
         path: endpoint,
         method: 'POST',
         headers: {
