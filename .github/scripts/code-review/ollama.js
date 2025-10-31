@@ -4,7 +4,7 @@ const { minimatch } = require('minimatch');
 
 class OllamaAPI {
   constructor() {
-    this.baseUrl = `http://${process.env.OLLAMA_ADDRESS}`;
+    this.baseUrl = process.env.OLLAMA_ADDRESS || 'localhost';
     this.model = process.env.OLLAMA_MODEL || 'codellama';
     this.filePattern = process.env.FILE_PATTERN || '**/*.{ts,tsx}';
   }
