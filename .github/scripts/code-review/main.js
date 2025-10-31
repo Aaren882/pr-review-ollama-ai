@@ -184,12 +184,11 @@ async function main() {
     const diffOutput = execSync(`git diff ${baseBranch} HEAD`).toString();
     const files = parseDiff(diffOutput);
 
-    const filesToReview = files.filter((file) => file.to && minimatch(file.to, filePattern));
-
+    /* const filesToReview = files.filter((file) => file.to && minimatch(file.to, filePattern));
+    console.log(`Reviewing ${filesToReview.length} files`); */
+    
     console.log(`Found ${files.length} changed files`);
-    console.log(`Reviewing ${filesToReview.length} TypeScript files`);
-
-    const chunks = filesToReview.flatMap((file) => file.chunks.map((chunk) => ({ chunk, file })));
+    const chunks = files.flatMap((file) => file.chunks.map((chunk) => ({ chunk, file })));
 
     for (let i = 0; i < chunks.length; i += REVIEW_CONFIG.concurrencyLimit) {
       const batch = chunks.slice(i, i + REVIEW_CONFIG.concurrencyLimit);
