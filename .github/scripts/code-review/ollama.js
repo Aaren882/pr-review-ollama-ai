@@ -9,10 +9,6 @@ class OllamaAPI {
     this.filePattern = process.env.FILE_PATTERN || '**/*.{ts,tsx}';
   }
 
-  shouldReviewFile(filename) {
-    return minimatch(filename, this.filePattern);
-  }
-
   async makeRequest(endpoint, data) {
     return new Promise((resolve, reject) => {
       const options = {
@@ -51,9 +47,6 @@ class OllamaAPI {
   }
 
   async reviewCode(content, filename, changedLines) {
-    if (!this.shouldReviewFile(filename)) {
-      return [];
-    }
 
     const prompt = `You are an expert code reviewer. Review the following code changes and provide specific, actionable feedback. Focus on:
 1. Type safety and potential runtime issues
