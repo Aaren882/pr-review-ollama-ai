@@ -14,10 +14,6 @@ inputs:
     description: 'Glob pattern for files to review (e.g., "**/*.{ts,tsx}")'
     required: false
     default: '**/*.{ts,tsx}'
-  model:
-    description: 'Ollama model to use for code review'
-    required: false
-    default: 'codellama'
   base-branch:
     description: 'Base branch to compare against'
     required: false
@@ -26,6 +22,10 @@ inputs:
     description: 'Number of files to review concurrently'
     required: false
     default: '5'
+  OLLAMA-MODEL:
+    description: 'Ollama model to use for code review'
+    required: false
+    default: 'codellama'
   OLLAMA-ADDRESS:
     description: 'Address for ollama'
     required: false
@@ -75,6 +75,7 @@ runs:
         FILE_PATTERN: ${{ inputs.file-pattern }}
         BASE_BRANCH: ${{ inputs.base-branch }}
         CONCURRENCY_LIMIT: ${{ inputs.concurrency-limit }}
+        OLLAMA_MODEL: ${{ inputs.OLLAMA-MODEL }}
         OLLAMA_ADDRESS: ${{ inputs.OLLAMA-ADDRESS }}
         OLLAMA_PORT: ${{ inputs.OLLAMA-PORT }}
       run: node ${{ github.action_path }}/.github/scripts/code-review/main.js

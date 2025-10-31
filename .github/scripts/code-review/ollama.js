@@ -3,9 +3,9 @@ const { REVIEW_CONFIG } = require('./config');
 const { minimatch } = require('minimatch');
 
 class OllamaAPI {
-  constructor(model = 'codellama') {
+  constructor() {
     this.baseUrl = 'http://localhost:11434';
-    this.model = model;
+    this.model = process.env.OLLAMA_MODEL || 'codellama';
     this.filePattern = process.env.FILE_PATTERN || '**/*.{ts,tsx}';
   }
 
