@@ -4,7 +4,7 @@ const { minimatch } = require('minimatch');
 
 class OllamaAPI {
   constructor() {
-    this.baseUrl = 'http://localhost:11434';
+    this.baseUrl = `http://${process.env.OLLAMA_ADDRESS}`;
     this.model = process.env.OLLAMA_MODEL || 'codellama';
     this.filePattern = process.env.FILE_PATTERN || '**/*.{ts,tsx}';
   }
@@ -12,8 +12,8 @@ class OllamaAPI {
   async makeRequest(endpoint, data) {
     return new Promise((resolve, reject) => {
       const options = {
-        hostname: process.env.OLLAMA_ADDRESS || 'localhost',
-        port: process.env.OLLAMA_PORT,
+        hostname: this.baseUrl,
+        port: parseInt(process.env.OLLAMA_PORT || "11434"),
         path: endpoint,
         method: 'POST',
         headers: {
